@@ -1,25 +1,41 @@
-// src/router/index.ts
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+import Login from '@/views/Login.vue';
+import Dashboard from '@/views/Dashboard.vue'; // Asegúrate de que el nombre coincida
 
-// Tipado para las rutas
-import type { RouteRecordRaw } from 'vue-router'
-
-const routes: RouteRecordRaw[] = [
+const routes = [
   {
     path: '/',
     name: 'Login',
-    component: () => import('@/views/Login.vue')
+    component: Login,
+    meta: { requiresAuth: false }
   },
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: () => import('@/views/Dashboard.vue')
+    component: Dashboard,
+    meta: { requiresAuth: true } // 🔒 Marcamos esta ruta como protegida
   }
-]
+];
 
 const router = createRouter({
   history: createWebHistory(),
   routes
-})
+});
 
-export default router
+// Guardia de navegación
+router.beforeEach((to, _from, next) => {
+  const token = localStorage.getItem('token');
+  const isAuthRequired = to.matched.some(record => record.meta.requiresAuth);
+
+  if (isAuthRequired && !token) {
+    // Si la ruta requiere auth y no hay token, al login
+    next({ name: 'Login' });
+  } else if (to.name === 'Login' && token) {
+    // Si ya está logueado e intenta ir al login, al dashboard
+    next({ name: 'Dashboard' });
+  } else {
+    next();
+  }
+});
+
+export default router;
