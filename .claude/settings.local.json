@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp list:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(tasklist:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(npx figma-developer-mcp:*)",
+      "Bash(node -e \"\nconst { execSync } = require\\(''child_process''\\);\n// Find the package location\ntry {\n  const path = execSync\\(''npm root -g''\\).toString\\(\\).trim\\(\\);\n  console.log\\(''Global npm root:'', path\\);\n} catch\\(e\\) {\n  console.log\\(''Error:'', e.message\\);\n}\n\")",
+      "Bash(timeout 5 npx:*)",
+      "Bash(cmd /c:*)",
+      "Bash(node:*)",
+      "Bash(timeout 8 npx:*)",
+      "Bash(npx:*)",
+      "Bash(powershell -ExecutionPolicy Bypass -File:*)",
+      "Bash(dir:*)",
+      "Bash(psql:*)",
+      "mcp__figma__get_figma_data",
+      "Bash(PGPASSWORD=123456 psql:*)",
+      "Bash(npm cache clean:*)",
+      "Bash(echo:*)",
+      "mcp__postgres__query",
+      "Bash(git -C /c/escuelaviva branch:*)",
+      "Bash(git -C /c/escuelaviva log -1 --pretty=format:\"%H%n%an%n%ad%n%s%n%b\")",
+      "WebSearch",
+      "Bash(npm install:*)"
+    ]
+  }
+}

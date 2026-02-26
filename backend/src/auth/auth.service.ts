@@ -1,6 +1,6 @@
-// src/auth/auth.service.ts
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt'; // 👈 Importamos el servicio
 import { PrismaService } from '../../prisma/prisma.service';
 import { User } from '@prisma/client';
 
@@ -8,7 +8,11 @@ type UserWithoutPassword = Omit<User, 'password'>;
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService) {}
+  // 👈 Inyectamos JwtService junto a PrismaService
+  constructor(
+    private prisma: PrismaService,
+    private jwtService: JwtService,
+  ) {}
 
   async validateUser(
     email: string,
@@ -18,25 +22,28 @@ export class AuthService {
     if (!user) {
       return null;
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    const compareFn = (bcrypt as any).compare as (
-      data: string,
-      encrypted: string,
-    ) => Promise<boolean>;
-    const isPasswordValid: boolean = await compareFn(password, user.password);
+
+    // Comparamos la contraseña de forma limpia
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
     if (isPasswordValid) {
-      const { password: _, ...result } = user;
-      void _; // Variable intencionalmente no usada para excluir password
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars -- excluir password del resultado
+      const { password, ...result } = user;
       return result as UserWithoutPassword;
     }
     return null;
   }
 
-  login(_user: any) {
-    // Parámetro temporal - se usará cuando se implemente JWT
-    void _user;
+  // 👈 Genera el token JWT para el usuario autenticado
+  login(user: UserWithoutPassword) {
+    const payload = {
+      email: user.email,
+      sub: user.id,
+      role: user.role, // 👈 Incluimos el rol que viene de la base de datos
+    };
+
     return {
-      access_token: 'mock-jwt-token', // Temporal â€” luego usaremos @nestjs/jwt
+      access_token: this.jwtService.sign(payload),
     };
   }
 }

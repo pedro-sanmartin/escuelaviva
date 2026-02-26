@@ -3,6 +3,8 @@
 
 **EscuelaViva** es una plataforma educativa integral, diseñada para cerrar brechas estructurales en el acceso, calidad, inclusión y gestión educativa en América Latina. Combina personalización, colaboración, datos accionables y una fuerte comunidad escolar, convirtiéndose en un ecosistema educativo vivo para docentes, estudiantes, apoderados, PIE y directivos.
 
+![Pantalla de inicio de sesión de Escuela Viva](assets/login-preview.png)
+
 ---
 
 ## 🚀 Visión
@@ -35,6 +37,12 @@ Empoderar a las comunidades educativas mediante una plataforma que:
 - **Frontend Hosting**: Vercel / Netlify
 - **Backend Hosting**: Railway / Render
 - **Multiplataforma**: Capacitor (iOS/Android) + Electron (Escritorio)
+
+---
+
+## ⚖️ Licencia
+
+Este proyecto está bajo una licencia personalizada de **«Uso para Evaluación»**. Consulta los detalles [aquí](LICENSE).
 
 ---
 
