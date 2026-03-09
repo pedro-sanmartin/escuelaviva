@@ -1,11 +1,10 @@
-import axios from 'axios';
+import axios from "axios";
+import { appConfig } from "@/config/app.config";
 
-// Creamos una instancia personalizada de Axios
 const api = axios.create({
-  // Usamos una variable de entorno de Vite o el localhost por defecto
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000',
+  baseURL: appConfig.apiBaseUrl,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 

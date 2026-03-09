@@ -41,7 +41,17 @@
   --ev-text-secondary: #64748b;
   --ev-urgente: #ef4444;
   --ev-info: #3b82f6;
+
+  /* DUA - 3 niveles de tamaño de fuente (Documento Técnico) */
+  --ev-font-small: 0.875rem;
+  --ev-font-medium: 1rem;
+  --ev-font-large: 1.125rem;
 }
+
+/* Clases DUA para escalado de fuente (inclusión) */
+.dua-font-small { font-size: var(--ev-font-small); }
+.dua-font-medium { font-size: var(--ev-font-medium); }
+.dua-font-large { font-size: var(--ev-font-large); }
 
 /**
  * Clase global reutilizable: tarjeta glassmorphism

@@ -4,10 +4,9 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { useDUA } from "@/composables/useDUA";
 
-export default defineComponent({
-  name: 'App'
-})
+// Inicializa preferencias DUA (fuente, tema) y aplica al <html>
+useDUA();
 </script>

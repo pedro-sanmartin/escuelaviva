@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { createAuthGuard } from "@/auth/auth.guard";
+import { ROUTE_ROLES } from "@/auth/auth.guard";
 import Login from "@/views/Login.vue";
-import Dashboard from "@/views/Dashboard.vue"; // Asegúrate de que el nombre coincida
+import MainLayout from "@/layouts/MainLayout.vue";
+import DashboardView from "@/views/dashboard/DashboardView.vue";
 
 const routes = [
   {
@@ -11,9 +14,19 @@ const routes = [
   },
   {
     path: "/dashboard",
+    component: MainLayout,
     name: "Dashboard",
-    component: Dashboard,
-    meta: { requiresAuth: true }, // 🔒 Marcamos esta ruta como protegida
+    meta: {
+      requiresAuth: true,
+      allowedRoles: [ROUTE_ROLES.DOCENTE, ROUTE_ROLES.PIE, ROUTE_ROLES.ESTUDIANTE],
+    },
+    children: [
+      {
+        path: "",
+        name: "DashboardHome",
+        component: DashboardView,
+      },
+    ],
   },
 ];
 
@@ -22,19 +35,6 @@ const router = createRouter({
   routes,
 });
 
-// Guardia de navegación
-// Guardia de navegación
-router.beforeEach((to, _from, next) => {
-  const token = localStorage.getItem("token");
-  const isAuthRequired = to.matched.some((record) => record.meta.requiresAuth);
-
-  if (isAuthRequired && !token) {
-    next({ name: "Login" });
-  } else if (to.name === "Login" && token) {
-    next({ name: "Dashboard" });
-  } else {
-    next();
-  }
-});
+router.beforeEach(createAuthGuard);
 
 export default router;
